@@ -1,0 +1,141 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    <title>Soloution Tool</title>
+    
+<style>
+    .page-wrapper {
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .menu-btn-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    .menu-btn {
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 4px;
+      border: 0.5px solid #333;
+      border-radius: 4px;
+    }
+
+    .bar {
+      width: 100%;
+      height: 3px;
+      background-color: #333;
+      transition: 0.4s;
+    }
+
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      z-index: 999;
+    }
+
+    .sidebar a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidebar .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 30px;
+      color: #818181;
+      cursor: pointer;
+    }
+ </style>
+
+</head>
+<body>
+<div class="page-wrapper">
+  <div class="menu-btn-container">
+    <div class="menu-btn" onclick="toggleSidebar()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <div class="menu-btn close-btn" style="display: none;" onclick="toggleSidebar()">&times;</div>
+  </div>
+
+  <div class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+    <a href="#">Link 4</a>
+    <a href="#">Link 5</a>
+    <a href="#">Link 6</a>
+    <a href="#">Link 7</a>
+    <a href="#">Link 8</a>
+    <a href="#">Link 9</a>
+    <a href="#">Link 10</a>
+  </div>
+<script>
+ function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const menuBtn = document.querySelector('.menu-btn');
+    const closeBtn = document.querySelector('.close-btn');
+
+    sidebar.style.width = sidebar.style.width === '200px' ? '0' : '200px';
+    menuBtn.style.display = menuBtn.style.display === 'none' ? 'flex' : 'none';
+  
+  }
+
+  // Hide menu button on scroll
+  let prevScrollPos = window.pageYOffset;
+  window.onscroll = function () {
+    const currentScrollPos = window.pageYOffset;
+    const menuBtnContainer = document.querySelector('.menu-btn-container');
+
+    if (prevScrollPos > currentScrollPos) {
+      menuBtnContainer.style.top = '20px';
+    } else {
+      menuBtnContainer.style.top = '-50px';
+    }
+
+    prevScrollPos = currentScrollPos;
+  };
+// include-sidebar.js
+document.addEventListener("DOMContentLoaded", function() {
+    // Fetch and include the sidebar HTML
+    fetch("sidebar.html")
+        .then(response => response.text())
+        .then(data => {
+            // Insert the sidebar HTML into the current page
+            document.body.insertAdjacentHTML("afterbegin", data);
+        })
+        .catch(error => console.error("Error fetching sidebar:", error));
+});
+</script>
+</body>
+</html>
